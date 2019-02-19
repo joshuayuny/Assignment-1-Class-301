@@ -10,84 +10,79 @@ struct PERSON{
     float Balance;
 };
 
-void Display(PERSON *persons, int N);
-void FindRichest(PERSON *persons, int N);
-void Deposit(char CustName[],PERSON *persons, int N);
-void NewCopy(string fname, PERSON *persons, int N);
-int main(){
-    int N=0;
+//Function names
+void Display(PERSON *p, int a);
+void FindRichest(PERSON *p, int a);
+void Deposit(char C[],PERSON *p, int a);
+void NewCopy(string firstname, PERSON *p, int a);
+
+int main()
+{
+    int a=0;
     ifstream in;
     in.open("data.txt");
-    if(in.fail()){
-        cout<<"Unable to open file"<<endl;
-        return 0;
-    }
     string line;
     while(getline(in, line)){
-        N++;
+        a++;
     }
     in.clear();
     in.seekg(0, ios::beg);
-    PERSON *persons = new PERSON[N];
-    string fname, lname;
-    int i=0;
-    while(in>>fname>>lname>>persons[i].Balance){
-        strcpy(persons[i].Name, (fname+" "+lname).c_str());
-        i++;
+    PERSON *p = new PERSON[a];
+    string firstname, lastname;
+    int x=0;
+    while(in>>firstname>>lastname>>p[x].Balance){
+        strcpy(p[x].Name, (firstname+" "+lastname).c_str());
+        x++;
     }
-    Display(persons, N);
-    FindRichest(persons, N);
-    char CustName[20];
+    Display(p, a);
+    FindRichest(p, a);
+    char C[20];
     cout<<"Enter your full name to deposit money:";
-    cin.getline(CustName, 20);
-    Deposit(CustName, persons, N);
-    NewCopy("data.txt", persons, N);
+    cin.getline(C, 20);
+    Deposit(C, p, a);
+    NewCopy("data.txt", p, a);
     return 0;
 }
 
-void Display(PERSON *persons, int N){
+void Display(PERSON *p, int N){
     cout<<setprecision(2)<<fixed;
     cout<<setw(20)<<left<<"Name"<<" Balance"<<endl;
     cout<<"-------------------------------------"<<endl;
     for(int i=0; i<N; i++){
-        cout<<setw(20)<<persons[i].Name<<" "<<persons[i].Balance<<endl;
+        cout<<setw(20)<<p[i].Name<<" "<<p[i].Balance<<endl;
     }
 }
 
-void FindRichest(PERSON *persons, int N){
+void FindRichest(PERSON *p, int N){
     int max=0;
     for(int i=0; i<N; i++){
-        if(persons[max].Balance<persons[i].Balance)
+        if(p[max].Balance<p[i].Balance)
         max = i;
     }
-    cout<<"The customer with maximum balance is "<<persons[max].Name<<endl;
+    cout<<"The customer with maximum balance is "<<p[max].Name<<endl;
 }
 
-void Deposit(char CustName[],PERSON *persons, int N){
+void Deposit(char C[],PERSON *p, int N){
     int ind = -1;
     for(int i=0; i<N; i++){
-        if(strcmp(CustName, persons[i].Name)==0){
+        if(strcmp(C, p[i].Name)==0){
             ind = i;
             break;
         }
     }
-    if(ind==-1)
-    cout<<"Sorry! Customer Name not found"<<endl;
-    else{
         double deposit;
-        cout<<" "<<CustName<<", how much would you like to deposit? ";
+        cout<<" "<<C<<", Deposit? ";
         cin>>deposit;
-        persons[ind].Balance+=deposit;
-        cout<<"Now yur new balance is "<<persons[ind].Balance<<endl;
-    }
+        p[ind].Balance+=deposit;
+        cout<<"New balance is $"<<p[ind].Balance<<endl;
 }
 
-void NewCopy(string fname, PERSON *persons, int N){
+void NewCopy(string firstname, PERSON *p, int N){
     ofstream out;
     out<<setprecision(2)<<fixed;
-    out.open(fname.c_str());
+    out.open(firstname.c_str());
     for(int i=0; i<N; i++){
-        out<<persons[i].Name<<" "<<persons[i].Balance<<endl;
+        out<<p[i].Name<<" "<<p[i].Balance<<endl;
     }
     out.close();
 }
