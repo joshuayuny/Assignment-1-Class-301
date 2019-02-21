@@ -62,27 +62,12 @@ void FindRichest(PERSON *p, int N){
     cout<<"The customer with maximum balance is "<<p[max].Name<<endl;
 }
 
-void Deposit(char C[],PERSON *p, int N){
-    int ind = -1;
-    for(int i=0; i<N; i++){
-        if(strcmp(C, p[i].Name)==0){
-            ind = i;
-            break;
-        }
-    }
-        double deposit;
-        cout<<" "<<C<<", Deposit? ";
-        cin>>deposit;
-        p[ind].Balance+=deposit;
-        cout<<"New balance is $"<<p[ind].Balance<<endl;
+void Deposit(char C[],PERSON *p, int N)
+{
+
 }
 
-void NewCopy(string firstname, PERSON *p, int N){
-    ofstream out;
-    out<<setprecision(2)<<fixed;
-    out.open(firstname.c_str());
-    for(int i=0; i<N; i++){
-        out<<p[i].Name<<" "<<p[i].Balance<<endl;
-    }
-    out.close();
+void NewCopy(string firstname, PERSON *p, int N)
+{
+
 }
